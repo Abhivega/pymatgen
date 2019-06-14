@@ -101,6 +101,21 @@ class BatteryAnalyzer():
             num_cations += self.max_cation_insertion
 
         return num_cations * self.cation_charge * ELECTRON_TO_AMPERE_HOURS
+    
+    def _get_max_cap_ah_norm(self, remove, insert):
+        """
+        Give max capacity in mAh for inserting and removing a charged cation
+        This method does normalize the capacity and intended as a helper method
+        """
+        frac= self.comp.get_reduced_composition_and_factor()[1]
+        num_cations = 0
+        if remove:
+            num_cations += self.max_cation_removal
+        if insert:
+            num_cations += self.max_cation_insertion
+
+        return num_cations * self.cation_charge * ELECTRON_TO_AMPERE_HOURS/ frac
+
 
 
     def get_max_capgrav(self, remove=True, insert=True):
